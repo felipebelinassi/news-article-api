@@ -1,2 +1,2 @@
-# news-article-api
-📰 A project made with NodeJS and TypeScript, responsible for news articles
+# 📰 News Article API
+> NodeJS API built with TypeScript
