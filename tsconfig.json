@@ -28,5 +28,11 @@
   "exclude": [
     "./node_modules/*",
     "dist"
-  ]
+  ],
+  "ts-node": {
+    "files": true
+  },
+  "files": [
+    "./tests/globals.d.ts"
+  ],
 }
