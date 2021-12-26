@@ -66,6 +66,28 @@
             }
           }
         }
+      },
+      "get": {
+        "summary": "Returns list of articles",
+        "tags": [
+          "API"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of articles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Article"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
@@ -87,6 +109,23 @@
         "type": "string",
         "format": "date-time",
         "example": "2021-12-26T16:47:35.623Z"
+      },
+      "Article": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "title": {
+            "$ref": "#/components/schemas/title"
+          },
+          "text": {
+            "$ref": "#/components/schemas/text"
+          },
+          "creationDate": {
+            "$ref": "#/components/schemas/creationDate"
+          }
+        }
       },
       "ArticleBody": {
         "type": "object",
