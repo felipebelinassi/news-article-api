@@ -63,4 +63,30 @@ describe('Articles functional tests', () => {
       expect(response.body).toEqual(createdArticles);
     });
   });
+
+  describe('Get article by id', () => {
+    it('should return a specific article by it`s id', async () => {
+      const article = {
+        id: '8cfee6d1-2063-48d1-88b4-77a5040556ae',
+        title: 'Article for testing',
+        text: 'This article has an id',
+        creationDate: new Date(),
+      };
+
+      NewsArticles.push(article);
+
+      const response = await global.testRequest.get(`/articles/${article.id}`);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(article);
+    });
+
+    it('should return 404 when the article is not found', async () => {
+      const articleId = 'inexistent_article';
+
+      const response = await global.testRequest.get(`/articles/${articleId}`);
+
+      expect(response.status).toBe(404);
+      expect(response.body.message).toBe('Article not found!');
+    });
+  });
 });

@@ -68,7 +68,7 @@
         }
       },
       "get": {
-        "summary": "Returns list of articles",
+        "summary": "Get list of articles",
         "tags": [
           "API"
         ],
@@ -89,9 +89,60 @@
           }
         }
       }
+    },
+    "/articles/{id}": {
+      "get": {
+        "summary": "Get a specific article by it`s id",
+        "tags": [
+          "API"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/articleId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Article object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Article not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "404",
+                  "error": "Not Found",
+                  "message": "Article not found!"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
+    "parameters": {
+      "articleId": {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        },
+        "description": "The article id"
+      }
+    },
     "schemas": {
       "id": {
         "type": "string",
