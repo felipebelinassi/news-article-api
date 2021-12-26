@@ -20,7 +20,7 @@ const updateArticleById = (req: Request, res: Response) => {
   }
 
   article.title = title;
-  article.text = text;
+  if (text) article.text = text;
 
   res.status(StatusCodes.NO_CONTENT).json();
 };

@@ -91,7 +91,7 @@ describe('Articles functional tests', () => {
   });
 
   describe('Update article', () => {
-    it('should update a specific article by it`s id', async () => {
+    it('should update title and text of a specific article', async () => {
       const createdArticle = {
         id: '8cfee6d1-2063-48d1-88b4-77a5040556ae',
         title: 'New article',
@@ -112,6 +112,28 @@ describe('Articles functional tests', () => {
       expect(response.status).toBe(204);
       expect(updatedArticle?.title).toEqual(updatedInfo.title);
       expect(updatedArticle?.text).toEqual(updatedInfo.text);
+    });
+
+    it('should update only the title of a specific article', async () => {
+      const createdArticle = {
+        id: '8cfee6d1-2063-48d1-88b4-77a5040556ae',
+        title: 'New article',
+        text: 'This article has an id',
+        creationDate: new Date(),
+      };
+
+      NewsArticles.push(createdArticle);
+
+      const updatedInfo = {
+        title: 'Updated title!',
+      };
+
+      const response = await global.testRequest.patch(`/articles/${createdArticle.id}`).send(updatedInfo);
+      const updatedArticle = NewsArticles.find((article) => article.id === createdArticle.id);
+
+      expect(response.status).toBe(204);
+      expect(updatedArticle?.title).toEqual(updatedInfo.title);
+      expect(updatedArticle?.text).toEqual('This article has an id');
     });
 
     it('should return 404 when the article is not found', async () => {
