@@ -53,6 +53,8 @@ yarn start
 The service is documented using OpenAPI 3.0 standards. The spec file is located on `docs/apiSpec.json`. You can also access the Swagger interface by running the application and opening the following route in your browser:
 `http://localhost:{{port}}/docs`
 
+You can also find some [usage examples](https://github.com/felipebelinassi/news-article-api/wiki/Usage-examples) in the project wiki.
+
 ## Environment Variables
 
 The list bellow features the environment variables defined in the application. All variables are **required**.
