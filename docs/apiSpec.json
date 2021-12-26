@@ -49,6 +49,21 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "400",
+                  "error": "Bad Request",
+                  "message": "Invalid parameters"
+                }
+              }
+            }
           }
         }
       }
@@ -101,6 +116,23 @@
           },
           "creationDate": {
             "$ref": "#/components/schemas/creationDate"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
           }
         }
       }
