@@ -18,6 +18,16 @@ describe('Articles functional tests', () => {
       expect(response.body).toEqual(expect.objectContaining(newArticle));
     });
 
+    it('should create an article with empty text', async () => {
+      const newArticle = {
+        title: 'New article',
+      };
+
+      const response = await global.testRequest.post('/articles').send(newArticle);
+      expect(response.status).toBe(201);
+      expect(response.body.text).toEqual('');
+    });
+
     it('should return 400 when there is a validation error', async () => {
       const newArticle = {
         text: 'This is an article without title',

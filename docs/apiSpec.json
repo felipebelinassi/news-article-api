@@ -229,7 +229,8 @@
             "$ref": "#/components/schemas/title"
           },
           "text": {
-            "$ref": "#/components/schemas/text"
+            "$ref": "#/components/schemas/text",
+            "default": ""
           }
         }
       },
