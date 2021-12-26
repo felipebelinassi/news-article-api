@@ -134,7 +134,11 @@
         "tags": [
           "API"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/articleId"
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
