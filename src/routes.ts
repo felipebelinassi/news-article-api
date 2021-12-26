@@ -6,5 +6,6 @@ const routes = Router();
 routes.get('/articles', articlesController.getArticles);
 routes.get('/articles/:id', articlesController.getArticleById);
 routes.post('/articles', articlesController.createArticles);
+routes.patch('/articles/:id', articlesController.updateArticleById);
 
 export default routes;
