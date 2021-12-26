@@ -4,6 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import * as OpenApiValidator from 'express-openapi-validator';
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import apiSpec from '../../docs/apiSpec.json';
+import routes from '../routes';
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.use(
     validateResponses: true,
   }),
 );
+
+app.use(routes);
 
 export const start = (port: string | number): Server =>
   app.listen(port, async () => {
