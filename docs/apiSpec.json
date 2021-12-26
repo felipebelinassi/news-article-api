@@ -1,0 +1,273 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.3.0",
+    "title": "News Articles API",
+    "description": "API responsible for creating, updating, and fetching news articles",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/",
+      "description": "Local server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "API",
+      "description": "API operations"
+    }
+  ],
+  "paths": {
+    "/articles": {
+      "post": {
+        "summary": "Create a new article",
+        "tags": [
+          "API"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The article has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticleCreatedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "400",
+                  "error": "Bad Request",
+                  "message": "Invalid parameters"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get list of articles",
+        "tags": [
+          "API"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of articles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Article"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles/{id}": {
+      "get": {
+        "summary": "Get a specific article by it`s id",
+        "tags": [
+          "API"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/articleId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Article object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Article not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "404",
+                  "error": "Not Found",
+                  "message": "Article not found!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a specific article",
+        "tags": [
+          "API"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/articleId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Resource was updated successfully"
+          },
+          "404": {
+            "description": "Article not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "404",
+                  "error": "Not Found",
+                  "message": "Article not found!"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "articleId": {
+        "in": "path",
+        "name": "id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/id"
+        },
+        "description": "The article id"
+      }
+    },
+    "schemas": {
+      "id": {
+        "type": "string",
+        "example": "18c80d09-bc96-437c-b450-8ac21db07ac1"
+      },
+      "title": {
+        "type": "string",
+        "example": "This is a title!"
+      },
+      "text": {
+        "type": "string",
+        "example": "Sample article text, for example."
+      },
+      "creationDate": {
+        "type": "string",
+        "format": "date-time",
+        "example": "2021-12-26T16:47:35.623Z"
+      },
+      "Article": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "title": {
+            "$ref": "#/components/schemas/title"
+          },
+          "text": {
+            "$ref": "#/components/schemas/text"
+          },
+          "creationDate": {
+            "$ref": "#/components/schemas/creationDate"
+          }
+        }
+      },
+      "ArticleBody": {
+        "type": "object",
+        "required": [
+          "title"
+        ],
+        "properties": {
+          "title": {
+            "$ref": "#/components/schemas/title"
+          },
+          "text": {
+            "$ref": "#/components/schemas/text",
+            "default": ""
+          }
+        }
+      },
+      "ArticleCreatedResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "title": {
+            "$ref": "#/components/schemas/title"
+          },
+          "text": {
+            "$ref": "#/components/schemas/text"
+          },
+          "creationDate": {
+            "$ref": "#/components/schemas/creationDate"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
