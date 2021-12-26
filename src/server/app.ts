@@ -5,6 +5,7 @@ import * as OpenApiValidator from 'express-openapi-validator';
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import apiSpec from '../../docs/apiSpec.json';
 import routes from '../routes';
+import errorHandler from '../middlewares/error-handler';
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(
 );
 
 app.use(routes);
+app.use(errorHandler);
 
 export const start = (port: string | number): Server =>
   app.listen(port, async () => {
