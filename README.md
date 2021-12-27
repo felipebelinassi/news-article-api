@@ -1,6 +1,7 @@
 # 📰 News Articles API
-> NodeJS API built with TypeScript and MongoDB
 [![Actions Status](https://github.com/felipebelinassi/news-articles-api/workflows/CI%20workflow/badge.svg)](https://github.com/felipebelinassi/news-articles-api/actions)
+
+NodeJS API built with TypeScript and MongoDB, responsible for creating, fetching, and updating news articles.
 
 ## Table of Contents
   - [Getting Started](#getting-started)
@@ -9,6 +10,8 @@
     - [Step 3: Install dependencies](#step-3-install-dependencies)
     - [Step 4: Set up the local database](#step-4-set-up-the-local-database)
     - [Step 5: Init the application](#step-5-init-the-application)
+  - [API Documentation](#api-documentation)
+  - [Environment Variables](#environment-variables)
 
 ## Getting Started
 ### Step 1: Set up the development environment
@@ -16,7 +19,7 @@
 You need to set up your development environment before you can do anything.
 
 - Install [Node.js and NPM](https://nodejs.org/en/download/)
-- Install yarn globally. This is **optional** since you can use npm, but be aware that the documentation will mention the yarn scripts.
+- Install [yarn](https://yarnpkg.com/) globally. This is **optional** since you can use npm, but be aware that the documentation will mention the yarn scripts.
   
 ```bash
 npm i -g yarn
@@ -26,10 +29,10 @@ npm i -g yarn
 
 Fork or clone this project and then open it using your favorite IDE.
 ```bash
-git clone git@github.com:felipebelinassi/news-article-api.git
+git clone git@github.com:username/news-articles-api.git
 
 # Open the project directory
-cd news-article-api
+cd news-articles-api
 ```
 
 Copy the `.env.example` file and rename it to `.env`. In this file you have to add the required environment variables for the application to work. You can see the details regarding the variables in the [Environment Variables](#-environment-variables) section.
