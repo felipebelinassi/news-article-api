@@ -1,5 +1,6 @@
-# 📰 News Article API
-> NodeJS API built with TypeScript
+# 📰 News Articles API
+> NodeJS API built with TypeScript and MongoDB
+[![Actions Status](https://github.com/felipebelinassi/news-articles-api/workflows/CI%20workflow/badge.svg)](https://github.com/felipebelinassi/news-articles-api/actions)
 
 ## Table of Contents
   - [Getting Started](#getting-started)
