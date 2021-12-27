@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import Article from '../database/models/NewsArticles';
@@ -6,10 +5,6 @@ import { sendErrorResponse } from '../helpers/utils/send-controller-errors';
 
 const updateArticleById = async (req: Request, res: Response): Promise<Response> => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return sendErrorResponse(res, { code: 400, message: 'Id not valid!' });
-    }
-
     const { title, text } = req.body;
     let infoToUpdate = { title };
     if (text) infoToUpdate = Object.assign(infoToUpdate, { text });
