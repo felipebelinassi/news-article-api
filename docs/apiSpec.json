@@ -45,7 +45,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ArticleCreatedResponse"
+                  "$ref": "#/components/schemas/Article"
                 }
               }
             }
@@ -243,6 +243,13 @@
       },
       "Article": {
         "type": "object",
+        "required": [
+          "id",
+          "title",
+          "text",
+          "creationDate",
+          "relevance"
+        ],
         "properties": {
           "id": {
             "$ref": "#/components/schemas/id"
@@ -273,26 +280,6 @@
           "text": {
             "$ref": "#/components/schemas/text",
             "default": ""
-          }
-        }
-      },
-      "ArticleCreatedResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/id"
-          },
-          "title": {
-            "$ref": "#/components/schemas/title"
-          },
-          "text": {
-            "$ref": "#/components/schemas/text"
-          },
-          "creationDate": {
-            "$ref": "#/components/schemas/creationDate"
-          },
-          "relevance": {
-            "$ref": "#/components/schemas/relevance"
           }
         }
       },
