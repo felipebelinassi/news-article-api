@@ -11,7 +11,6 @@ interface ArticleModel extends Omit<Article, '_id'>, Document {}
 
 const schema = new mongoose.Schema<ArticleModel>(
   {
-    id: { type: String },
     title: { type: String, required: true },
     text: { type: String },
     creationDate: { type: Schema.Types.Date, required: true, default: new Date() },
