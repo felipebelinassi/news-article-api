@@ -1,6 +1,7 @@
 # 📰 News Articles API
-> NodeJS API built with TypeScript and MongoDB
 [![Actions Status](https://github.com/felipebelinassi/news-articles-api/workflows/CI%20workflow/badge.svg)](https://github.com/felipebelinassi/news-articles-api/actions)
+
+NodeJS API built with TypeScript and MongoDB, responsible for creating, fetching, and updating news articles.
 
 ## Table of Contents
   - [Getting Started](#getting-started)
