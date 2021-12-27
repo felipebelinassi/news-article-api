@@ -1,5 +1,5 @@
 import { ArticleModel } from '../database/models/NewsArticles';
-import { differenceInMinutes } from 'date-fns';
+import differenceInMinutes from 'date-fns/differenceInMinutes';
 
 enum ArticleRelevance {
   HOT = 'HOT',
@@ -9,14 +9,16 @@ enum ArticleRelevance {
 
 const articleService = () => {
   const countChars = (text: string, character: string) => text.split(character).length - 1;
+  const articleAgeInMinutes = (firstDate: Date, secondDate: Date) =>
+    differenceInMinutes(firstDate, secondDate, { roundingMethod: 'ceil' });
 
   const getRelevance = (text: string, articleDate: Date) => {
     const now = new Date();
 
-    if (differenceInMinutes(now, articleDate) <= 1 && countChars(text, '!') > countChars(text, '.')) {
+    if (articleAgeInMinutes(now, articleDate) <= 1 && countChars(text, '!') > countChars(text, '.')) {
       return ArticleRelevance.HOT;
     }
-    if (differenceInMinutes(now, articleDate) <= 5 && countChars(text, ',') > countChars(text, '.')) {
+    if (articleAgeInMinutes(now, articleDate) <= 5 && countChars(text, ',') > countChars(text, '.')) {
       return ArticleRelevance.BORING;
     }
     return ArticleRelevance.STANDARD;

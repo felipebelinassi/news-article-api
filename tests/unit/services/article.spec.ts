@@ -1,11 +1,11 @@
 import articleService from '../../../src/services/article';
 import Article from '../../../src/database/models/NewsArticles';
 
-beforeAll(() => {
+beforeEach(() => {
   jest.useFakeTimers().setSystemTime(new Date('2021-12-27T16:00:00.000Z'));
 });
 
-afterAll(() => {
+afterEach(() => {
   jest.useRealTimers();
 });
 
