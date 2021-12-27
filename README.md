@@ -19,7 +19,7 @@ NodeJS API built with TypeScript and MongoDB, responsible for creating, fetching
 You need to set up your development environment before you can do anything.
 
 - Install [Node.js and NPM](https://nodejs.org/en/download/)
-- Install yarn globally. This is **optional** since you can use npm, but be aware that the documentation will mention the yarn scripts.
+- Install [yarn](https://yarnpkg.com/) globally. This is **optional** since you can use npm, but be aware that the documentation will mention the yarn scripts.
   
 ```bash
 npm i -g yarn
@@ -29,10 +29,10 @@ npm i -g yarn
 
 Fork or clone this project and then open it using your favorite IDE.
 ```bash
-git clone git@github.com:felipebelinassi/news-article-api.git
+git clone git@github.com:username/news-articles-api.git
 
 # Open the project directory
-cd news-article-api
+cd news-articles-api
 ```
 
 Copy the `.env.example` file and rename it to `.env`. In this file you have to add the required environment variables for the application to work. You can see the details regarding the variables in the [Environment Variables](#-environment-variables) section.
