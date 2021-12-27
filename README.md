@@ -10,6 +10,8 @@ NodeJS API built with TypeScript and MongoDB, responsible for creating, fetching
     - [Step 3: Install dependencies](#step-3-install-dependencies)
     - [Step 4: Set up the local database](#step-4-set-up-the-local-database)
     - [Step 5: Init the application](#step-5-init-the-application)
+  - [API Documentation](#api-documentation)
+  - [Environment Variables](#environment-variables)
 
 ## Getting Started
 ### Step 1: Set up the development environment
