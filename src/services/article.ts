@@ -1,4 +1,4 @@
-import { Article } from '../database/models/NewsArticles';
+import { ArticleModel } from '../database/models/NewsArticles';
 import { differenceInMinutes } from 'date-fns';
 
 enum ArticleRelevance {
@@ -22,8 +22,11 @@ const articleService = () => {
     return ArticleRelevance.STANDARD;
   };
 
-  const formatArticle = (article: Article) => ({
-    ...article,
+  const formatArticle = (article: ArticleModel) => ({
+    id: article.id,
+    title: article.title,
+    text: article.text,
+    creationDate: new Date(article.creationDate),
     relevance: getRelevance(article.text, article.creationDate),
   });
 

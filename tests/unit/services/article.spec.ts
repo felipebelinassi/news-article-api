@@ -1,5 +1,5 @@
 import articleService from '../../../src/services/article';
-import { Article } from '../../../src/database/models/NewsArticles';
+import Article from '../../../src/database/models/NewsArticles';
 
 beforeAll(() => {
   jest.useFakeTimers().setSystemTime(new Date('2021-12-27T16:00:00.000Z'));
@@ -56,12 +56,10 @@ describe('Article Service', () => {
 
   describe('Format article with relevance', () => {
     it('should return article with relevance field', () => {
-      const article: Article = {
-        _id: '61c8ed2da92d6fee60298285',
+      const article = new Article({
         title: 'This is a title!',
         text: 'You gotta check this!',
-        creationDate: new Date('2021-12-27T16:00:00.000Z'),
-      };
+      });
 
       const response = defaultArticleService.formatArticle(article);
       expect(response).toHaveProperty('relevance', 'HOT');
