@@ -6,7 +6,8 @@
     - [Step 1: Set up the development environment](#step-1-set-up-the-development-environment)
     - [Step 2: Clone the project](#step-2-clone-the-project)
     - [Step 3: Install dependencies](#step-3-install-dependencies)
-    - [Step 4: Init the application](#step-4-init-the-application)
+    - [Step 4: Set up the local database](#step-4-set-up-the-local-database)
+    - [Step 5: Init the application](#step-5-init-the-application)
 
 ## Getting Started
 ### Step 1: Set up the development environment
@@ -40,7 +41,16 @@ After cloning the project, you need to install the required dependencies for it 
 yarn
 ```
 
-### Step 4: Init the application
+### Step 4: Set up the local database
+This API uses MongoDB as it's database, and requires it to be running before starting the server. You can run a local instance using [Docker](https://www.docker.com/). Simply run:
+
+```bash
+docker-compose up -d
+```
+
+This will run the database at *localhost:27017* using the settings defined in the `docker-compose.yml` file. After that you can connect to the DB using some tool like [Robo3T](https://robomongo.org/) if you want.
+
+### Step 5: Init the application
 
 Finally you can start your project with the following script.
 
@@ -62,3 +72,4 @@ The list bellow features the environment variables defined in the application. A
 | Environment               | Description                                   |
 |-------------------------- |---------------------------------------------- |
 | PORT                      | Port where the server will start              |
+| MONGODB_URL               | MongoDB connection string                     |

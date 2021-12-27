@@ -1,8 +1,7 @@
-import NewsArticles from '../../src/models/NewsArticles';
+import { Article } from '../../src/database/models/NewsArticles';
 
-beforeEach(() => {
-  // Empty in-memory list
-  NewsArticles.splice(0, NewsArticles.length);
+beforeEach(async () => {
+  await Article.deleteMany({});
 });
 
 describe('Articles functional tests', () => {
@@ -51,47 +50,34 @@ describe('Articles functional tests', () => {
     });
 
     it('should return list with created articles', async () => {
-      const createdArticles = [
-        {
-          id: '8cfee6d1-2063-48d1-88b4-77a5040556ae',
-          title: 'Article #1!',
-          text: 'First article',
-          creationDate: new Date(),
-        },
-        {
-          id: '8cfee6d1-2063-48d1-88b4-77a5040556ae',
-          title: 'Article #2',
-          text: 'Second article',
-          creationDate: new Date(),
-        },
-      ];
+      const newArticle = {
+        title: 'Article #1!',
+        text: 'First article',
+      };
 
-      NewsArticles.push(...createdArticles);
+      const savedArticle = (await new Article(newArticle).save()).toJSON();
 
       const response = await global.testRequest.get('/articles');
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(createdArticles);
+      expect(response.body).toEqual([savedArticle]);
     });
   });
 
   describe('Get article by id', () => {
     it('should return a specific article by it`s id', async () => {
-      const article = {
-        id: '8cfee6d1-2063-48d1-88b4-77a5040556ae',
+      const newArticle = {
         title: 'Article for testing',
         text: 'This article has an id',
-        creationDate: new Date(),
       };
+      const savedArticle = (await new Article(newArticle).save()).toJSON();
 
-      NewsArticles.push(article);
-
-      const response = await global.testRequest.get(`/articles/${article.id}`);
+      const response = await global.testRequest.get(`/articles/${savedArticle.id}`);
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(article);
+      expect(response.body).toEqual(savedArticle);
     });
 
     it('should return 404 when the article is not found', async () => {
-      const articleId = 'inexistent_article';
+      const articleId = '61c8f021fb837f6cf1c89b0f';
 
       const response = await global.testRequest.get(`/articles/${articleId}`);
 
@@ -102,22 +88,18 @@ describe('Articles functional tests', () => {
 
   describe('Update article', () => {
     it('should update title and text of a specific article', async () => {
-      const createdArticle = {
-        id: '8cfee6d1-2063-48d1-88b4-77a5040556ae',
+      const savedArticle = await new Article({
         title: 'New article',
         text: 'This article has an id',
-        creationDate: new Date(),
-      };
-
-      NewsArticles.push(createdArticle);
+      }).save();
 
       const updatedInfo = {
         title: 'New article (UPDATED!)',
         text: 'This text was updated',
       };
 
-      const response = await global.testRequest.patch(`/articles/${createdArticle.id}`).send(updatedInfo);
-      const updatedArticle = NewsArticles.find((article) => article.id === createdArticle.id);
+      const response = await global.testRequest.patch(`/articles/${savedArticle._id}`).send(updatedInfo);
+      const updatedArticle = await Article.findById(savedArticle._id);
 
       expect(response.status).toBe(204);
       expect(updatedArticle?.title).toEqual(updatedInfo.title);
@@ -125,21 +107,17 @@ describe('Articles functional tests', () => {
     });
 
     it('should update only the title of a specific article', async () => {
-      const createdArticle = {
-        id: '8cfee6d1-2063-48d1-88b4-77a5040556ae',
+      const savedArticle = await new Article({
         title: 'New article',
         text: 'This article has an id',
-        creationDate: new Date(),
-      };
-
-      NewsArticles.push(createdArticle);
+      }).save();
 
       const updatedInfo = {
         title: 'Updated title!',
       };
 
-      const response = await global.testRequest.patch(`/articles/${createdArticle.id}`).send(updatedInfo);
-      const updatedArticle = NewsArticles.find((article) => article.id === createdArticle.id);
+      const response = await global.testRequest.patch(`/articles/${savedArticle._id}`).send(updatedInfo);
+      const updatedArticle = await Article.findOne({ _id: savedArticle._id });
 
       expect(response.status).toBe(204);
       expect(updatedArticle?.title).toEqual(updatedInfo.title);
@@ -147,7 +125,7 @@ describe('Articles functional tests', () => {
     });
 
     it('should return 404 when the article is not found', async () => {
-      const articleId = 'inexistent_article';
+      const articleId = '61c8f021fb837f6cf1c89b0f';
 
       const response = await global.testRequest.patch(`/articles/${articleId}`).send({
         title: 'Text to update',

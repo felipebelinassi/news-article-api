@@ -1,10 +1,15 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import NewsArticles from '../models/NewsArticles';
+import Article from '../database/models/NewsArticles';
+import { sendErrorResponse } from '../helpers/utils/send-controller-errors';
 
-const getArticles = (req: Request, res: Response) => {
-  const response = NewsArticles;
-  res.status(StatusCodes.OK).json(response);
+const getArticles = async (_: Request, res: Response) => {
+  try {
+    const articles = await Article.find();
+    res.status(StatusCodes.OK).json(articles);
+  } catch (err) {
+    sendErrorResponse(res, err);
+  }
 };
 
 export default getArticles;

@@ -1,28 +1,25 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import NewsArticles from '../models/NewsArticles';
-import CustomError from '../helpers/errors/custom-error';
+import Article from '../database/models/NewsArticles';
+import { sendErrorResponse } from '../helpers/utils/send-controller-errors';
 
-const updateArticleById = (req: Request, res: Response) => {
-  const articleId = req.params.id;
-  const { title, text } = req.body;
+const updateArticleById = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { title, text } = req.body;
+    let infoToUpdate = { title };
+    if (text) infoToUpdate = Object.assign(infoToUpdate, { text });
 
-  const article = NewsArticles.find((article) => article.id === articleId);
+    const article = await Article.findById(req.params.id);
+    if (!article) {
+      const customError = { code: StatusCodes.NOT_FOUND, message: 'Article not found!' };
+      return sendErrorResponse(res, customError);
+    }
 
-  if (!article) {
-    res.status(StatusCodes.NOT_FOUND).json(
-      CustomError.format({
-        code: StatusCodes.NOT_FOUND,
-        message: 'Article not found!',
-      }),
-    );
-    return;
+    await Article.updateOne({ _id: req.params.id }, { $set: infoToUpdate }, { new: true });
+    return res.status(StatusCodes.NO_CONTENT).json();
+  } catch (err) {
+    return sendErrorResponse(res, err);
   }
-
-  article.title = title;
-  if (text) article.text = text;
-
-  res.status(StatusCodes.NO_CONTENT).json();
 };
 
 export default updateArticleById;

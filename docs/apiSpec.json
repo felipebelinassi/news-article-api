@@ -112,6 +112,21 @@
               }
             }
           },
+          "400": {
+            "description": "Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "400",
+                  "error": "Bad Request",
+                  "message": "Invalid parameters"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Article not found",
             "content": {
@@ -153,6 +168,21 @@
           "204": {
             "description": "Resource was updated successfully"
           },
+          "400": {
+            "description": "Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "code": "400",
+                  "error": "Bad Request",
+                  "message": "Invalid parameters"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Article not found",
             "content": {
@@ -187,7 +217,7 @@
     "schemas": {
       "id": {
         "type": "string",
-        "example": "18c80d09-bc96-437c-b450-8ac21db07ac1"
+        "example": "61c8ed2da92d6fee60298285"
       },
       "title": {
         "type": "string",

@@ -1,22 +1,21 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import NewsArticles from '../models/NewsArticles';
-import CustomError from '../helpers/errors/custom-error';
+import Article from '../database/models/NewsArticles';
+import { sendErrorResponse } from '../helpers/utils/send-controller-errors';
 
-const getArticleById = (req: Request, res: Response) => {
-  const articleId = req.params.id;
-  const article = NewsArticles.find((article) => article.id === articleId);
+const getArticleById = async (req: Request, res: Response) => {
+  try {
+    const article = await Article.findById(req.params.id);
 
-  if (!article) {
-    res.status(StatusCodes.NOT_FOUND).json(
-      CustomError.format({
-        code: StatusCodes.NOT_FOUND,
-        message: 'Article not found!',
-      }),
-    );
+    if (!article) {
+      const customError = { code: StatusCodes.NOT_FOUND, message: 'Article not found!' };
+      return sendErrorResponse(res, customError);
+    }
+
+    return res.status(StatusCodes.OK).json(article);
+  } catch (err) {
+    return sendErrorResponse(res, err);
   }
-
-  res.status(StatusCodes.OK).json(article);
 };
 
 export default getArticleById;

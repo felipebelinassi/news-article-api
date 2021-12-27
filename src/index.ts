@@ -34,7 +34,7 @@ const checkForExitSignal = (appServer: Server) => {
 
 (async (): Promise<void> => {
   try {
-    const appServer = server.start(config.port);
+    const appServer = server.start(config);
 
     checkForExitSignal(appServer);
   } catch (err) {
