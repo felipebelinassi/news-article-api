@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import { articleService } from '../services';
 import Article from '../database/models/NewsArticles';
 import { sendErrorResponse } from '../helpers/utils/send-controller-errors';
 
@@ -12,7 +13,8 @@ const getArticleById = async (req: Request, res: Response) => {
       return sendErrorResponse(res, customError);
     }
 
-    return res.status(StatusCodes.OK).json(article);
+    const response = articleService.formatArticle(article);
+    return res.status(StatusCodes.OK).json(response);
   } catch (err) {
     return sendErrorResponse(res, err);
   }

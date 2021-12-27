@@ -14,7 +14,12 @@ describe('Articles functional tests', () => {
 
       const response = await global.testRequest.post('/articles').send(newArticle);
       expect(response.status).toBe(201);
-      expect(response.body).toEqual(expect.objectContaining(newArticle));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          ...newArticle,
+          relevance: 'HOT',
+        }),
+      );
     });
 
     it('should create an article with empty text', async () => {
@@ -55,11 +60,19 @@ describe('Articles functional tests', () => {
         text: 'First article',
       };
 
-      const savedArticle = (await new Article(newArticle).save()).toJSON();
+      const savedArticle = await new Article(newArticle).save();
 
       const response = await global.testRequest.get('/articles');
       expect(response.status).toBe(200);
-      expect(response.body).toEqual([savedArticle]);
+      expect(response.body).toEqual([
+        {
+          id: savedArticle.id,
+          title: savedArticle.title,
+          text: savedArticle.text,
+          creationDate: savedArticle.creationDate.toISOString(),
+          relevance: 'STANDARD',
+        },
+      ]);
     });
   });
 
@@ -69,11 +82,17 @@ describe('Articles functional tests', () => {
         title: 'Article for testing',
         text: 'This article has an id',
       };
-      const savedArticle = (await new Article(newArticle).save()).toJSON();
+      const savedArticle = await new Article(newArticle).save();
 
       const response = await global.testRequest.get(`/articles/${savedArticle.id}`);
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(savedArticle);
+      expect(response.body).toEqual({
+        id: savedArticle.id,
+        title: savedArticle.title,
+        text: savedArticle.text,
+        creationDate: savedArticle.creationDate.toISOString(),
+        relevance: 'STANDARD',
+      });
     });
 
     it('should return 404 when the article is not found', async () => {
@@ -98,8 +117,8 @@ describe('Articles functional tests', () => {
         text: 'This text was updated',
       };
 
-      const response = await global.testRequest.patch(`/articles/${savedArticle._id}`).send(updatedInfo);
-      const updatedArticle = await Article.findById(savedArticle._id);
+      const response = await global.testRequest.patch(`/articles/${savedArticle.id}`).send(updatedInfo);
+      const updatedArticle = await Article.findById(savedArticle.id);
 
       expect(response.status).toBe(204);
       expect(updatedArticle?.title).toEqual(updatedInfo.title);
@@ -116,8 +135,8 @@ describe('Articles functional tests', () => {
         title: 'Updated title!',
       };
 
-      const response = await global.testRequest.patch(`/articles/${savedArticle._id}`).send(updatedInfo);
-      const updatedArticle = await Article.findOne({ _id: savedArticle._id });
+      const response = await global.testRequest.patch(`/articles/${savedArticle.id}`).send(updatedInfo);
+      const updatedArticle = await Article.findOne({ _id: savedArticle.id });
 
       expect(response.status).toBe(204);
       expect(updatedArticle?.title).toEqual(updatedInfo.title);
