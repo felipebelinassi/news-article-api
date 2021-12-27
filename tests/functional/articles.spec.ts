@@ -69,11 +69,11 @@ describe('Articles functional tests', () => {
         title: 'Article for testing',
         text: 'This article has an id',
       };
-      const savedArticle = await new Article(newArticle).save();
+      const savedArticle = (await new Article(newArticle).save()).toJSON();
 
-      const response = await global.testRequest.get(`/articles/${savedArticle._id}`);
+      const response = await global.testRequest.get(`/articles/${savedArticle.id}`);
       expect(response.status).toBe(200);
-      expect(response.body).toEqual(newArticle);
+      expect(response.body).toEqual(savedArticle);
     });
 
     it('should return 404 when the article is not found', async () => {

@@ -12,7 +12,7 @@
     "start:dev": "ts-node-dev --transpile-only -r dotenv/config src/index.ts",
     "test": "yarn test:unit && yarn test:functional",
     "test:unit": "jest",
-    "test:functional": "jest --projects ./tests --runInBand",
+    "test:functional": "jest --verbose --projects ./tests --runInBand",
     "lint": "eslint ./src --ext .ts",
     "lint:fix": "eslint ./src --ext .ts --fix"
   },
