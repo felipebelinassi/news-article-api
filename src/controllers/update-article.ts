@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import Article from '../database/models/NewsArticles';
 import { sendErrorResponse } from '../helpers/utils/send-controller-errors';
 
-const updateArticleById = async (req: Request, res: Response): Promise<Response> => {
+const updateArticleById = async (req: Request, res: Response) => {
   try {
     const { title, text } = req.body;
     let infoToUpdate = { title };

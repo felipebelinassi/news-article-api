@@ -7,7 +7,7 @@ export interface Article {
   creationDate: Date;
 }
 
-interface ArticleModel extends Omit<Article, '_id'>, Document {}
+export interface ArticleModel extends Omit<Article, '_id'>, Document {}
 
 const schema = new mongoose.Schema<ArticleModel>(
   {
@@ -18,8 +18,7 @@ const schema = new mongoose.Schema<ArticleModel>(
   {
     toJSON: {
       transform: (_, ret): void => {
-        ret.id = ret._id.toString();
-        ret.creationDate = ret.creationDate.toISOString();
+        ret.id = ret._id;
         delete ret._id;
         delete ret.__v;
       },

@@ -232,6 +232,15 @@
         "format": "date-time",
         "example": "2021-12-26T16:47:35.623Z"
       },
+      "relevance": {
+        "type": "string",
+        "enum": [
+          "HOT",
+          "BORING",
+          "STANDARD"
+        ],
+        "example": "STANDARD"
+      },
       "Article": {
         "type": "object",
         "properties": {
@@ -246,6 +255,9 @@
           },
           "creationDate": {
             "$ref": "#/components/schemas/creationDate"
+          },
+          "relevance": {
+            "$ref": "#/components/schemas/relevance"
           }
         }
       },
@@ -278,6 +290,9 @@
           },
           "creationDate": {
             "$ref": "#/components/schemas/creationDate"
+          },
+          "relevance": {
+            "$ref": "#/components/schemas/relevance"
           }
         }
       },
