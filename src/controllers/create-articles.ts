@@ -1,18 +1,16 @@
-import { randomUUID } from 'crypto';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import NewsArticles from '../models/NewsArticles';
+import Article from '../database/models/NewsArticles';
+import { sendErrorResponse } from '../helpers/utils/send-controller-errors';
 
-const createArticles = async (req: Request, res: Response): Promise<void> => {
-  const newArticle = {
-    ...req.body,
-    id: randomUUID(),
-    creationDate: new Date(),
-  };
-
-  NewsArticles.push(newArticle);
-
-  res.status(StatusCodes.CREATED).send(newArticle);
+const createArticles = async (req: Request, res: Response) => {
+  try {
+    const article = new Article({ ...req.body });
+    const result = await article.save();
+    res.status(StatusCodes.CREATED).send(result);
+  } catch (err) {
+    sendErrorResponse(res, err);
+  }
 };
 
 export default createArticles;
